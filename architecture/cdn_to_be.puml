@@ -1,0 +1,69 @@
+@startuml
+!theme mars
+skinparam componentStyle uml1
+skinparam backgroundColor MOTIVATION
+skinparam defaultTextAlignment center
+skinparam actorStyle awesome
+skinparam linetype ortho
+
+
+title Yandex-Cinema Content Delivery Network Architecture
+
+actor Client
+actor Admin
+cloud "NGINX" as WebServer
+
+frame "**Distributed File Storage**" as FileStorage << <color:Black>Хранилище файлов (**Minio**)</color> >> {
+    database "Master Node" as Master
+    database "Replica Node_1" as Replica1
+    database "Replica Node_2" as Replica2
+    database "Replica Node_3" as Replica3
+    database "          ...         " as ReplicaAny
+    database "Replica Node_n" as Replica_N
+}
+
+frame "**Movies API**" as Movies  << <color:Black>Сервис поиска/просмотра фильмов (**FastAPI**)</color> >> {
+    component "Search API" as Search
+    component "Watch API" as Watch
+}
+
+frame "**Movies Admin Panel**" as ContentAdmin << <color:Black>Панель администратора контента</color> >> {
+    component "Info Manager" as InfoAdmin
+    component "Files Manager" as FilesAdmin
+}
+
+database "**Movies DB**" as Postgres << <color:Black>Основная БД с информацией по фильмам</color> >> {
+    collections "Genres" as GenresSQL
+    collections "Films" as FilmsSQL
+    collections "Persons" as PersonsSQL
+}
+
+database "**Search DB**" as Elastic << <color:Black>БД для поиска информации по фильмам</color> >> {
+    collections "Genres" as GenresElastic
+    collections "Films" as FilmsElastic
+    collections "Persons" as PersonsElastic
+}
+
+component "**ETL**" as ETL << <color:Black>Процесс миграции данных</color> >>
+
+Client <-d-> WebServer
+Admin <-d-> WebServer
+
+WebServer <-d-> InfoAdmin: (**Admin**)\nУправление информацией о фильмах
+WebServer <-d-> FilesAdmin: (**Admin**)\nЗагрузка/Удаление контента
+
+WebServer <-.- FileStorage: Стриминг\nфильма
+
+WebServer <--d--> Search: (**Client**) Поиск информации по фильмам/жанрам/персонам
+WebServer <--d--> Watch: (**Client**) Получение ссылки для загрузки фильма
+
+Watch <-.- Elastic: Получение пути\nк фильму
+
+ETL <-r- Postgres
+ETL -u-> Elastic
+Search <-.- Elastic: Поиск информации\nпо фильму
+InfoAdmin <-> Postgres
+Master <-r- FilesAdmin: Загрузка файла\nна сервер
+
+
+@enduml
