@@ -14,56 +14,69 @@ actor Admin
 cloud "NGINX" as WebServer
 
 frame "**Distributed File Storage**" as FileStorage << <color:Black>Хранилище файлов (**Minio**)</color> >> {
+    component "Files Manager\nAdmin Panel" as FilesAdmin
     database "Master Node" as Master
-    database "Replica Node_1" as Replica1
-    database "Replica Node_2" as Replica2
-    database "Replica Node_3" as Replica3
-    database "          ...         " as ReplicaAny
-    database "Replica Node_n" as Replica_N
+    together {
+        database "Replica Node_n" as Replica_N
+        database "          ...         " as ReplicaAny
+        database "Replica Node_3" as Replica3
+        database "Replica Node_2" as Replica2
+        database "Replica Node_1" as Replica1
+    }
 }
 
-frame "**Movies API**" as Movies  << <color:Black>Сервис поиска/просмотра фильмов (**FastAPI**)</color> >> {
-    component "Search API" as Search
-    component "Watch API" as Watch
+together {
+    frame "**Movies API**" as Movies  << <color:Black>Сервис поиска/просмотра фильмов (**FastAPI**)</color> >> {
+        component "Search API" as Search
+        component "Watch API" as Watch
+    }
+
+    component "**Movies Admin Panel**" as ContentAdmin << <color:Black>Панель администратора контента</color> >>
 }
 
-frame "**Movies Admin Panel**" as ContentAdmin << <color:Black>Панель администратора контента</color> >> {
-    component "Info Manager" as InfoAdmin
-    component "Files Manager" as FilesAdmin
-}
+together {
 
-database "**Movies DB**" as Postgres << <color:Black>Основная БД с информацией по фильмам</color> >> {
-    collections "Genres" as GenresSQL
-    collections "Films" as FilmsSQL
-    collections "Persons" as PersonsSQL
-}
+    database "**Movies DB**" as Postgres << <color:Black>Основная БД с информацией по фильмам</color> >> {
+        together {
+            collections "Genres" as GenresSQL
+            collections "Films" as FilmsSQL
+            collections "Persons" as PersonsSQL
+        }
+    }
 
-database "**Search DB**" as Elastic << <color:Black>БД для поиска информации по фильмам</color> >> {
-    collections "Genres" as GenresElastic
-    collections "Films" as FilmsElastic
-    collections "Persons" as PersonsElastic
-}
+    component "**ETL**" as ETL << <color:Black>Процесс миграции данных</color> >>
 
-component "**ETL**" as ETL << <color:Black>Процесс миграции данных</color> >>
+    database "**Search DB**" as Elastic << <color:Black>БД для поиска информации по фильмам</color> >> {
+        together {
+            collections "Genres" as GenresElastic
+            collections "Films" as FilmsElastic
+            collections "Persons" as PersonsElastic
+        }
+    }
+}
 
 Client <-d-> WebServer
 Admin <-d-> WebServer
 
-WebServer <-d-> InfoAdmin: (**Admin**)\nУправление информацией о фильмах
-WebServer <-d-> FilesAdmin: (**Admin**)\nЗагрузка/Удаление контента
+WebServer "(**Admin**)\nУправление информацией о фильмах" <-d-> ContentAdmin
+WebServer <-r-> FilesAdmin: (**Admin**)\nЗагрузка/Удаление контента
 
-WebServer <-.- FileStorage: Стриминг\nфильма
+FileStorage -u--> WebServer: Стриминг\nфильма
 
-WebServer <--d--> Search: (**Client**) Поиск информации по фильмам/жанрам/персонам
-WebServer <--d--> Watch: (**Client**) Получение ссылки для загрузки фильма
+WebServer <--d--> Search: (**Client**)\nПоиск информации\nпо фильмам/жанрам/персонам
+WebServer "(**Client**) Получение ссылки для загрузки фильма" <--d--> Watch
 
-Watch <-.- Elastic: Получение пути\nк фильму
+Elastic --u.-> Watch: Получение пути\nк фильму
+Elastic --u.-> Search: Поиск информации\nпо фильму
 
 ETL <-r- Postgres
 ETL -u-> Elastic
-Search <-.- Elastic: Поиск информации\nпо фильму
-InfoAdmin <-> Postgres
-Master <-r- FilesAdmin: Загрузка файла\nна сервер
+ContentAdmin <-> Postgres
+FilesAdmin --> "Загрузка файла\nна сервер" Master
+Master -.[norank]-> "Репликация\nданных" Replica1
+Master -.[norank]-> "Репликация\nданных" Replica2
+Master -.[norank]-> "Репликация\nданных" Replica3
+Master -.[norank]-> "Репликация\nданных" Replica_N
 
 
 @enduml
