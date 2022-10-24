@@ -123,3 +123,6 @@ cython_debug/
 .idea/
 !env/*.example
 !env/.gitkeep
+/docker/minio/hostname
+/docker/minio/hosts
+/docker/minio/resolv.conf
