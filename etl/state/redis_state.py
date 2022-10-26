@@ -3,7 +3,8 @@ from typing import Optional
 import backoff
 from common import BACKOFF_CONFIG, RedisConnectionConfig
 from redis import Redis
-from state.state_interface import SateInterface
+
+from .state_interface import SateInterface
 
 
 class RedisState(SateInterface):
@@ -29,13 +30,11 @@ class RedisState(SateInterface):
         """Конфиг для подключения к Redis."""
         return self._config
 
-    @backoff.on_exception(**BACKOFF_CONFIG)
     def get_key(self, key: str, default: Optional[str] = None) -> Optional[str]:
         if value := self.connection.get(key):
             return value.decode(encoding="utf-8")
         return default
 
-    @backoff.on_exception(**BACKOFF_CONFIG)
     def set_key(self, key: str, value: str) -> None:
         self._connection.set(key, value.encode(encoding="utf-8"))
 
@@ -48,7 +47,7 @@ class RedisState(SateInterface):
         """
         try:
             redis_connection.ping()
-        except Exception:
+        except Exception:  # noqa
             return False
         return True
 

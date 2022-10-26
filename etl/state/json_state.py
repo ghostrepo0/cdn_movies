@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from typing import Optional, Union
 
-from state.state_interface import SateInterface
+from .state_interface import SateInterface
 
 
 class JSONSate(SateInterface):
