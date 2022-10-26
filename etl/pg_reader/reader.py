@@ -4,9 +4,10 @@ import backoff
 import psycopg2
 from common import BACKOFF_CONFIG, PostgresConnectionConfig
 from models.models import AbstractModel
-from pg_reader.mappings import MODEL_MAP
 from psycopg2.extensions import connection as pg_conn
 from psycopg2.extras import DictCursor
+
+from .mappings import MODEL_MAP
 
 
 class PGReader:
@@ -31,7 +32,6 @@ class PGReader:
     def config(self) -> PostgresConnectionConfig:
         return self._config
 
-    @backoff.on_exception(**BACKOFF_CONFIG)
     def read_data(
         self,
         index: str,
@@ -50,14 +50,15 @@ class PGReader:
             self._connection.close()
         return psycopg2.connect(**self._config.dict(), cursor_factory=DictCursor)
 
-    @backoff.on_exception(**BACKOFF_CONFIG)
     def _create_generator(
         self,
         model: Type[AbstractModel],
         query: str,
         iter_size: Optional[int] = 1000,
     ) -> Iterator[tuple[dict, str]]:
-        cursor = self.connection.cursor()
+
+        cursor: DictCursor = self.connection.cursor()
+
         cursor.itersize = iter_size
         cursor.execute(query)
 

@@ -1,7 +1,8 @@
 import logging
 
 import backoff
-from common.etl_config import ETL_CONFIG
+
+from .etl_config import ETL_CONFIG
 
 logger = logging.getLogger(__name__)
 
