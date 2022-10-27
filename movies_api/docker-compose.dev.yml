@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  fastapi:
+    container_name: fastapi
+    build:
+      dockerfile: Dockerfile.dev
+    image: my_fastapi
+    command: python -m main
+    volumes:
+      - ./src/:/usr/fastapi/src
+    env_file:
+      - ./.env.dev
+    environment:
+      PYTHONPATH: /usr/fastapi/src
+    ports:
+      - '8000:8000'
+    depends_on:
+      - redis
+      - elasticsearch
+
+  redis:
+    image: redis:latest
+    container_name: redis
+#    оставил открытым порт для тестирования кэша
+    ports:
+      - '6379:6379'
+
+
+  elasticsearch:
+    image: elasticsearch:7.14.0
+    container_name: elastic
+    environment:
+      # Указываем ES запуститься в одном экземпляре
+      discovery.type: single-node
+    ports:
+      - '9200:9200'

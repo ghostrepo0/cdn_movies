@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  fastapi:
+    container_name: fastapi_service
+    build:
+      dockerfile: Dockerfile.prod
+    image: my_fastapi
+    command: gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornH11Worker --bind 0.0.0.0:8000
+    volumes:
+      - ./src/:/usr/fastapi/src
+    env_file:
+      - ./.env.prod
+    environment:
+      PYTHONPATH: /usr/fastapi/src
+    depends_on:
+      - redis
+      - elasticsearch
+
+  redis:
+    image: redis:latest
+    container_name: redis
+
+
+# Чтобы подключиться к ES в сети 'backend'
+#networks:
+#  default:
+#    name: backend
+#    external: true
