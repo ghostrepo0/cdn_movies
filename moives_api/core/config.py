@@ -4,9 +4,8 @@ from logging import config as logging_config
 from pathlib import Path
 
 import backoff
+from core.logger import LOGGING
 from pydantic import BaseSettings, Field
-
-from src.core.logger import LOGGING
 
 logging_config.dictConfig(LOGGING)
 
@@ -24,8 +23,6 @@ class RedisConnectionConfig(BaseSettings):
 class ServiceConnectionConfig(BaseSettings):
     host: str = Field(..., env="FASTAPI_SERVICE_HOST")
     port: int = Field(..., env="FASTAPI_SERVICE_PORT")
-    secret_key: str = Field(..., env="SECRET_KEY")
-    jwt_hashing_algorithm: str = Field(..., env="JWT_HASHING_ALGORITHM")
 
 
 ELASTIC_CONF = ElasticConnectionConfig()

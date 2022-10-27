@@ -4,14 +4,13 @@ from uuid import UUID
 
 import backoff
 import orjson
+from core.config import BACKOFF_CONFIG
+from core.helper_functions import orjson_dumps
 from elasticsearch import AsyncElasticsearch, NotFoundError
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Bool, Match, MultiMatch, Nested
-
-from src.core.config import BACKOFF_CONFIG
-from src.core.helper_functions import orjson_dumps
-from src.models import ESSearchQuery, ModelTypes
-from src.services.redis_cache import CacheInterface
+from models import ESSearchQuery, ModelTypes
+from services.redis_cache import CacheInterface
 
 
 class ServiceInterface(ABC):

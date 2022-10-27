@@ -2,14 +2,13 @@ import logging
 
 import aioredis
 import uvicorn
+from api.v1 import films, genres, persons
+from core.config import ELASTIC_CONF, PROJECT_NAME, REDIS_CONF, SERVICE_CONF
+from core.logger import LOGGING
+from db import elastic, redis
 from elasticsearch import AsyncElasticsearch
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-
-from src.api.v1 import films, genres, persons
-from src.core.config import ELASTIC_CONF, PROJECT_NAME, REDIS_CONF, SERVICE_CONF
-from src.core.logger import LOGGING
-from src.db import elastic, redis
 
 app = FastAPI(
     title=PROJECT_NAME,

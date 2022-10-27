@@ -1,19 +1,18 @@
 from http import HTTPStatus
 from typing import Optional
 
+from core.messages import PersonMessages as msgs  # noqa
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.requests import Request
-
-from src.core.messages import PersonMessages as msgs  # noqa
-from src.models import Person, PersonResponse
-from src.models.queries import (
+from models import Person, PersonResponse
+from models.queries import (
     SEARCH_PARAM,
     UUID_PARAM,
     FilterQueryParams,
     PaginationQueryParams,
     SortQueryParams,
 )
-from src.services.persons import PersonService, get_person_service
+from services.persons import PersonService, get_person_service
 
 router = APIRouter()
 

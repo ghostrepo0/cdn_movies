@@ -2,6 +2,25 @@ version: '3.8'
 
 services:
 
+  fastapi_service:
+    build:
+      context: .
+      dockerfile: ./docker/movies_api/Dockerfile
+    depends_on:
+      elasticsearch:
+        condition: service_started
+      redis:
+        condition: service_started
+      etl-postgres-elastic:
+        condition: service_started
+    ports:
+      - '8000:8000'
+    env_file:
+      - env/.env.movies_api
+      - env/.env.redis
+      - env/.env.elasticsearch
+    command: [ "python", "-m", "gunicorn", "main:app", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+
   etl-postgres-elastic:
     build:
       context: .

@@ -37,8 +37,9 @@ RUN apk update --no-cache && apk upgrade --no-cache\
   && pip install -U setuptools \
   && apk add build-base
 
-COPY ../../src/. .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+COPY ../../moives_api/. .
+COPY ../../requirements/. .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements-movies_api.txt
 
 #########
 # FINAL #
@@ -51,21 +52,21 @@ RUN mkdir -p /home/app \
 
 ENV HOME=/home/app \
     APP_HOME=/home/app/src \
-    PYTHONPATH=/home/app
+    PYTHONPATH=$APP_HOME
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 RUN apk update && apk add libpq
 COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
+COPY --from=builder /usr/src/app/requirements-movies_api.txt .
 RUN pip install --no-cache /wheels/*
 
-COPY ../../docker/fastapi_service/entrypoint.sh .
+COPY ../../docker/movies_api/entrypoint.sh .
 RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh \
     && chmod +x  $APP_HOME/entrypoint.sh
 
-COPY ../../src/. $APP_HOME
+COPY ../../moives_api/. $APP_HOME
 
 RUN chown -R app:app $APP_HOME
 

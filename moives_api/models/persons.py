@@ -1,6 +1,6 @@
 from typing import Optional
 
-from src.models._base_model import AbstractModel, PersonRole
+from models._base_model import AbstractModel, PersonRole
 
 
 class Person(AbstractModel):
