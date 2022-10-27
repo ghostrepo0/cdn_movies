@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  tests:
+    image: my_fastapi
+    container_name: test
+    volumes:
+      - ./tests/:/usr/fastapi/tests/
+    working_dir: /usr/fastapi/tests/
+    environment:
+      - PYTHONPATH=/usr/fastapi/tests/
+      - PYTHONUNBUFFERED=1
+      - ELASTIC_HOST=elastic
+#      - SERVICE_URL=http://nginx:80
+      - SERVICE_URL=http://fastapi:8000
+      - API_URL=/api/v1/
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+    entrypoint: >
+      sh -c "pip install -r ./functional/requirements.txt
+      && PYTHONPATH=/usr/fastapi/src pytest "
+
+# Чтобы подключиться к ES в сети 'backend' если запускается
+#  отдельно от docker-compose.prod.yml
+#networks:
+#  default:
+#    name: backend
+#    external: true

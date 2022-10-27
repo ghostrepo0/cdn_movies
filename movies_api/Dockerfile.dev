@@ -1,0 +1,26 @@
+FROM python:3.9-alpine as builder
+
+
+WORKDIR /usr/src/fastapi
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN apk update \
+    && apk add --no-cache gcc g++ musl-dev rust cargo patchelf python3-dev
+
+RUN apk add build-base
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/fastapi/wheels -r requirements.txt
+
+FROM python:3.9.6-alpine
+
+WORKDIR /usr/fastapi/src
+
+RUN apk update && apk add libpq gcc linux-headers musl-dev
+COPY --from=builder /usr/src/fastapi/wheels /wheels
+COPY --from=builder /usr/src/fastapi/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+
+COPY src .
