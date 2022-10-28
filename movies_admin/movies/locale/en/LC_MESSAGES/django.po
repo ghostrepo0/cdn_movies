@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-13 01:24+0300\n"
+"POT-Creation-Date: 2022-10-28 10:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,64 +17,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\02_movies_admin\config\movies\models.py:23
-#: .\02_movies_admin\config\movies\models.py:36
-msgid "name"
-msgstr "name"
 
-#: .\02_movies_admin\config\movies\models.py:24
-#: .\02_movies_admin\config\movies\models.py:37
-msgid "description"
-msgstr "description"
-
-#: .\02_movies_admin\config\movies\models.py:28
-msgid "genre"
-msgstr "genre"
-
-#: .\02_movies_admin\config\movies\models.py:29
-msgid "genres"
-msgstr "genres"
-
-#: .\02_movies_admin\config\movies\models.py:38
-msgid "creation_date"
-msgstr "creation date"
-
-#: .\02_movies_admin\config\movies\models.py:40
-msgid "rating"
-msgstr "rating"
-
-#: .\02_movies_admin\config\movies\models.py:46
+#: movies_admin/movies/apps.py:8 movies_admin/movies/models.py:38
 msgid "movies"
 msgstr "movies"
 
-#: .\02_movies_admin\config\movies\models.py:47
+#: movies_admin/movies/models.py:24 movies_admin/movies/models.py:41
+msgid "name"
+msgstr "name"
+
+#: movies_admin/movies/models.py:25 movies_admin/movies/models.py:42
+msgid "description"
+msgstr "description"
+
+#: movies_admin/movies/models.py:29
+msgid "genre"
+msgstr "genre"
+
+#: movies_admin/movies/models.py:30
+msgid "genres"
+msgstr "genres"
+
+#: movies_admin/movies/models.py:39
 msgid "tv_show"
 msgstr "tv show"
 
-#: .\02_movies_admin\config\movies\models.py:49
+#: movies_admin/movies/models.py:43
+msgid "creation_date"
+msgstr "creation date"
+
+#: movies_admin/movies/models.py:45
+msgid "rating"
+msgstr "rating"
+
+#: movies_admin/movies/models.py:50
 msgid "type"
 msgstr "type"
 
-#: .\02_movies_admin\config\movies\models.py:55
+#: movies_admin/movies/models.py:52
+msgid "file_path"
+msgstr ""
+
+#: movies_admin/movies/models.py:56
 msgid "film work"
 msgstr "film work"
 
-#: .\02_movies_admin\config\movies\models.py:56
+#: movies_admin/movies/models.py:57
 msgid "film works"
 msgstr "film works"
 
-#: .\02_movies_admin\config\movies\models.py:74
+#: movies_admin/movies/models.py:87
 msgid "full_name"
 msgstr "full name"
 
-#: .\02_movies_admin\config\movies\models.py:78
+#: movies_admin/movies/models.py:91
 msgid "person"
 msgstr "person"
 
-#: .\02_movies_admin\config\movies\models.py:79
+#: movies_admin/movies/models.py:92
 msgid "persons"
 msgstr "persons"
 
-#: .\02_movies_admin\config\movies\models.py:90
+#: movies_admin/movies/models.py:102
+msgid "actor"
+msgstr ""
+
+#: movies_admin/movies/models.py:103
+msgid "director"
+msgstr ""
+
+#: movies_admin/movies/models.py:104
+msgid "writer"
+msgstr ""
+
+#: movies_admin/movies/models.py:108
 msgid "role"
 msgstr "role"
