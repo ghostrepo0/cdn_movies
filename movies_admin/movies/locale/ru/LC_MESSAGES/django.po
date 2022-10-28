@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-13 01:24+0300\n"
+"POT-Creation-Date: 2022-10-28 10:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,64 +19,79 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-#: .\02_movies_admin\config\movies\models.py:23
-#: .\02_movies_admin\config\movies\models.py:36
-msgid "name"
-msgstr "название"
 
-#: .\02_movies_admin\config\movies\models.py:24
-#: .\02_movies_admin\config\movies\models.py:37
-msgid "description"
-msgstr "описание"
-
-#: .\02_movies_admin\config\movies\models.py:28
-msgid "genre"
-msgstr "жанр"
-
-#: .\02_movies_admin\config\movies\models.py:29
-msgid "genres"
-msgstr "жанры"
-
-#: .\02_movies_admin\config\movies\models.py:38
-msgid "creation_date"
-msgstr "дата создания"
-
-#: .\02_movies_admin\config\movies\models.py:40
-msgid "rating"
-msgstr "оценка"
-
-#: .\02_movies_admin\config\movies\models.py:46
+#: movies_admin/movies/apps.py:8 movies_admin/movies/models.py:38
 msgid "movies"
 msgstr "фильмы"
 
-#: .\02_movies_admin\config\movies\models.py:47
+#: movies_admin/movies/models.py:24 movies_admin/movies/models.py:41
+msgid "name"
+msgstr "название"
+
+#: movies_admin/movies/models.py:25 movies_admin/movies/models.py:42
+msgid "description"
+msgstr "описание"
+
+#: movies_admin/movies/models.py:29
+msgid "genre"
+msgstr "жанр"
+
+#: movies_admin/movies/models.py:30
+msgid "genres"
+msgstr "жанры"
+
+#: movies_admin/movies/models.py:39
 msgid "tv_show"
 msgstr "тв шоу"
 
-#: .\02_movies_admin\config\movies\models.py:49
+#: movies_admin/movies/models.py:43
+msgid "creation_date"
+msgstr "дата создания"
+
+#: movies_admin/movies/models.py:45
+msgid "rating"
+msgstr "оценка"
+
+#: movies_admin/movies/models.py:50
 msgid "type"
 msgstr "тип"
 
-#: .\02_movies_admin\config\movies\models.py:55
+#: movies_admin/movies/models.py:52
+msgid "file_path"
+msgstr "путь к файлу"
+
+#: movies_admin/movies/models.py:56
 msgid "film work"
 msgstr "кинофильм"
 
-#: .\02_movies_admin\config\movies\models.py:56
+#: movies_admin/movies/models.py:57
 msgid "film works"
 msgstr "кинофильмы"
 
-#: .\02_movies_admin\config\movies\models.py:74
+#: movies_admin/movies/models.py:87
 msgid "full_name"
 msgstr "полное имя"
 
-#: .\02_movies_admin\config\movies\models.py:78
+#: movies_admin/movies/models.py:91
 msgid "person"
 msgstr "персона"
 
-#: .\02_movies_admin\config\movies\models.py:79
+#: movies_admin/movies/models.py:92
 msgid "persons"
 msgstr "персоны"
 
-#: .\02_movies_admin\config\movies\models.py:90
+#: movies_admin/movies/models.py:102
+msgid "actor"
+msgstr "актер"
+
+#: movies_admin/movies/models.py:103
+msgid "director"
+msgstr "режиссер"
+
+#: movies_admin/movies/models.py:104
+msgid "writer"
+msgstr "сценарист"
+
+#: movies_admin/movies/models.py:108
 msgid "role"
 msgstr "роль"
