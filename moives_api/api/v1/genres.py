@@ -1,19 +1,18 @@
 from http import HTTPStatus
 from typing import Optional
 
+from core.messages import GenreMessages as msgs  # noqa
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.requests import Request
-
-from src.core.messages import GenreMessages as msgs  # noqa
-from src.models import Genre, GenreResponse
-from src.models.queries import (
+from models import Genre, GenreResponse
+from models.queries import (
     SEARCH_PARAM,
     UUID_PARAM,
     FilterQueryParams,
     PaginationQueryParams,
     SortQueryParams,
 )
-from src.services.genres import GenreService, get_genre_service
+from services.genres import GenreService, get_genre_service
 
 router = APIRouter()
 

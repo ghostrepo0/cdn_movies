@@ -1,13 +1,12 @@
 from functools import lru_cache
 from typing import Type
 
+from db.elastic import get_elastic
 from elasticsearch import AsyncElasticsearch
 from fastapi import Depends
-
-from src.db.elastic import get_elastic
-from src.models import Person
-from src.services._base_interface import ServiceInterface
-from src.services.redis_cache import CacheInterface, get_cache
+from models import Person
+from services._base_interface import ServiceInterface
+from services.redis_cache import CacheInterface, get_cache
 
 
 class PersonService(ServiceInterface):

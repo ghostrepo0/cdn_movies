@@ -2,9 +2,8 @@ from enum import Enum
 from uuid import UUID
 
 import orjson
+from core.helper_functions import orjson_dumps
 from pydantic import BaseModel
-
-from src.core.helper_functions import orjson_dumps
 
 
 class FilmGenre(str, Enum):

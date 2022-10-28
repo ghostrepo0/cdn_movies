@@ -2,10 +2,9 @@ from abc import ABC, abstractmethod
 from typing import Any, Optional, Union
 
 from aioredis import Redis
+from core.config import CACHE_EXPIRE_IN_SECONDS
+from db.redis import get_redis
 from fastapi import Depends
-
-from src.core.config import CACHE_EXPIRE_IN_SECONDS
-from src.db.redis import get_redis
 
 
 class CacheInterface(ABC):

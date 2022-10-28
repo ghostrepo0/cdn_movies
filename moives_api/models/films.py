@@ -1,8 +1,8 @@
 from typing import Optional
 
-from src.models._base_model import AbstractModel, FilmGenre
-from src.models.genres import Genre
-from src.models.persons import Person
+from models._base_model import AbstractModel, FilmGenre
+from models.genres import Genre
+from models.persons import Person
 
 
 class FilmResponse(AbstractModel):
