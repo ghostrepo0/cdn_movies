@@ -38,7 +38,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", False) == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")  # type: ignore
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

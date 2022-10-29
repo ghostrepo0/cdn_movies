@@ -44,7 +44,7 @@ class ServiceInterface(ABC):
             using=self.elastic,
         )
 
-    def compose_cache_key(self, **kwargs) -> str:
+    def compose_cache_key(self, **kwargs) -> str:  # type: ignore
         if uuid_key := kwargs.get("uuid"):
             return "{0}:{1}".format(
                 self.es_index,
@@ -105,7 +105,7 @@ class ServiceInterface(ABC):
             filter_field=filter_field,
             filter_value=filter_value,
             page_number=page_number,
-            page_size=page_size,
+            page_size=page_size,  # type: ignore
             sort_order=sort_order,
         )
 

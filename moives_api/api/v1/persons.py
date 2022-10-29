@@ -77,8 +77,8 @@ async def person_search(
 
     return [
         PersonResponse(
-            id=person.id,
-            name=person.name,
+            id=person.id,  # type: ignore
+            name=person.name,  # type: ignore
         )
         for person in persons_search_result
     ]
@@ -119,8 +119,8 @@ async def person_all(
 
     return [
         PersonResponse(
-            id=person.id,
-            name=person.name,
+            id=person.id,  # type: ignore
+            name=person.name,  # type: ignore
         )
         for person in persons_all
     ]

@@ -2,7 +2,7 @@ from typing import Optional
 
 import backoff
 from common import BACKOFF_CONFIG, RedisConnectionConfig
-from redis import Redis
+from redis import Redis  # type: ignore
 
 from .state_interface import SateInterface
 
@@ -36,7 +36,7 @@ class RedisState(SateInterface):
         return default
 
     def set_key(self, key: str, value: str) -> None:
-        self._connection.set(key, value.encode(encoding="utf-8"))
+        self._connection.set(key, value.encode(encoding="utf-8"))  # type: ignore
 
     @staticmethod
     def is_connection_alive(redis_connection: Redis) -> bool:

@@ -46,15 +46,15 @@ jobs:
 
     - name: flake8 lint
       run: |
-        flake8 etl --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/notifications_admin/flake8
-        flake8 movies_admin --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/notifications_scheduler/flake8
-        flake8 moives_api --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/notifications_sender/flake8
+        flake8 etl --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/etl/flake8
+        flake8 movies_admin --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/movies_admin/flake8
+        flake8 moives_api --max-line-length=160 --ignore="E203, W503" --format=html --htmldir=reports/moives_api/flake8
 
     - name: mypy check
       run: |
-        mypy etl --html-report reports/notifications_admin/mypy --ignore-missing-imports
-        mypy movies_admin --html-report reports/notifications_scheduler/mypy --ignore-missing-imports
-        mypy moives_api --html-report reports/notifications_sender/mypy --ignore-missing-imports
+        mypy etl --html-report reports/etl/mypy --ignore-missing-imports
+        mypy movies_admin --html-report reports/movies_admin/mypy --ignore-missing-imports
+        mypy moives_api --html-report reports/moives_api/mypy --ignore-missing-imports
 
     - name: Upload reports
       uses: actions/upload-artifact@v3

@@ -77,8 +77,8 @@ async def genre_search(
 
     return [
         GenreResponse(
-            id=genre.id,
-            name=genre.name,
+            id=genre.id,  # type: ignore
+            name=genre.name,  # type: ignore
         )
         for genre in genres_search_result
     ]
@@ -118,8 +118,8 @@ async def genre_all(
 
     return [
         GenreResponse(
-            id=genre.id,
-            name=genre.name,
+            id=genre.id,  # type: ignore
+            name=genre.name,  # type: ignore
         )
         for genre in genres_all
     ]

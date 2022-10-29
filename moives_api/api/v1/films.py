@@ -20,7 +20,7 @@ router = APIRouter()
 
 @router.get(
     "/{film_id}",
-    response_model=Union[FilmDetailedResponse, FilmResponse],
+    response_model=Union[FilmDetailedResponse, FilmResponse],  # type: ignore
     summary=msgs.FILMS_ID_GET_SUMMARY,
     description=msgs.FILMS_ID_GET_DESCRIPTION,
     response_description=msgs.FILMS_ID_GET_RESPONSE_DESCR,
@@ -87,9 +87,9 @@ async def film_search(
 
     return [
         FilmResponse(
-            id=film.id,
-            title=film.title,
-            imdb_rating=film.imdb_rating,
+            id=film.id,  # type: ignore
+            title=film.title,  # type: ignore
+            imdb_rating=film.imdb_rating,  # type: ignore
         )
         for film in films_search_result
     ]

@@ -1,4 +1,4 @@
-[//]: # (![Project CI]&#40;https://github.com/ghostrepo0/notifications_service/actions/workflows/python.yml/badge.svg&#41;)
+![Project CI](https://github.com/ghostrepo0/cdn_movies/actions/workflows/python.yml/badge.svg)
 # Распределённое хранение файлов
 
 Дипломный проект в рамках курса Yandex.Practicum "Мидл-Python"

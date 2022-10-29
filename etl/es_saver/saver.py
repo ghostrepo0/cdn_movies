@@ -77,7 +77,7 @@ class ElasticSaver:
             last_loaded = last_record
             yield item
 
-            if i % iter_size == 0:
+            if i % iter_size == 0:  # type: ignore
                 self._state.set_key(key, last_loaded)
 
         if last_loaded:

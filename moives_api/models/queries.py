@@ -16,7 +16,7 @@ class ESSearchQuery(BaseModel):
     page_size: int = 10
 
     sort_field: Optional[str] = None
-    sort_order: Optional[Literal["asc", "desc"]] = ("desc",)
+    sort_order: Optional[Literal["asc", "desc"]] = ("desc",)  # type: ignore
 
 
 PAGE_NUMBER_PARAM: Final[QueryClass] = Query(
@@ -39,8 +39,8 @@ PAGE_SIZE_PARAM: Final[QueryClass] = Query(
 class PaginationQueryParams:
     def __init__(
         self,
-        page_number: Optional[int] = PAGE_NUMBER_PARAM,
-        page_size: Optional[int] = PAGE_SIZE_PARAM,
+        page_number: Optional[int] = PAGE_NUMBER_PARAM,  # type: ignore
+        page_size: Optional[int] = PAGE_SIZE_PARAM,  # type: ignore
     ) -> None:
         self.page_number = page_number
         self.page_size = page_size
@@ -76,8 +76,8 @@ SORT_ORDER_PARAM: Final[QueryClass] = Query(
 class SortQueryParams:
     def __init__(
         self,
-        sort_field: Optional[str] = SORT_FIELD_PARAM,
-        sort_order: Optional[Literal["asc", "desc"]] = SORT_ORDER_PARAM,
+        sort_field: Optional[str] = SORT_FIELD_PARAM,  # type: ignore
+        sort_order: Optional[Literal["asc", "desc"]] = SORT_ORDER_PARAM,  # type: ignore
     ) -> None:
         self.sort_field = sort_field
         self.sort_order = sort_order
@@ -98,8 +98,8 @@ FILTER_VALUE_PARAM: Final[QueryClass] = Query(
 class FilterQueryParams:
     def __init__(
         self,
-        filter_field: Optional[str] = FILTER_FIELD_PARAM,
-        filter_value: Optional[str] = FILTER_VALUE_PARAM,
+        filter_field: Optional[str] = FILTER_FIELD_PARAM,  # type: ignore
+        filter_value: Optional[str] = FILTER_VALUE_PARAM,  # type: ignore
     ) -> None:
         self.filter_field = filter_field
         self.filter_value = filter_value
