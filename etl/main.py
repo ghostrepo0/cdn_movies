@@ -3,8 +3,7 @@ import time
 from datetime import datetime
 from typing import Optional
 
-from common import (ES_CONFIG, ETL_CONFIG, LOGGER_CONFIG, POSTGRES_CONFIG,
-                    REDIS_CONFIG)
+from common import ES_CONFIG, ETL_CONFIG, LOGGER_CONFIG, POSTGRES_CONFIG, REDIS_CONFIG
 from es_saver.saver import ElasticSaver
 from pg_reader.mappings import QUERY_MAP
 from pg_reader.query_composer import compose_query_for_index
@@ -67,13 +66,12 @@ def main() -> None:
 
             except ValueError as e:
                 logger.error(
-                    "ERROR while transferring index: {0}\nERROR INFO:\n{1}".format(
-                        index, e
-                    )
+                    "ERROR while transferring index: %(index)s\nERROR INFO:\n%(e)s",
+                    {"index": index, "e": e},
                 )
                 continue
 
-        logger.info("LET'S CHILL FOR SOME TIME ({0} seconds)".format(freq))
+        logger.info("LET'S CHILL FOR SOME TIME (%s seconds)", freq)
         time.sleep(freq)
 
 

@@ -53,12 +53,13 @@ class ElasticSaver:
         time_taken = time.perf_counter() - t_start
 
         if rows == 0:
-            logger.info("No data to update for {0}".format(index.upper()))
+            logger.info("No data to update for %s", index.upper())
         else:
             logger.info(
-                "{0} rows uploaded to Elasticsearch for {1} within {2} microseconds".format(
-                    rows, index.upper(), round(time_taken, 4)
-                )
+                "%s rows uploaded to Elasticsearch for %s within %.4f microseconds",
+                rows,
+                index.upper(),
+                time_taken,
             )
 
     @backoff.on_exception(**BACKOFF_CONFIG)

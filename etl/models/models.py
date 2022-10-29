@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -29,8 +29,8 @@ class GenresES(AbstractModel):
 
 
 class PersonsES(PersonFilmWork):
-    role: Optional[List[PersonRole]] = None
-    film_ids: Optional[List[str]] = None
+    role: Optional[list[PersonRole]] = None
+    film_ids: Optional[list[str]] = None
 
     class Config:
         use_enum_values = True
@@ -41,10 +41,10 @@ class MoviesES(AbstractModel):
     imdb_rating: Optional[float] = None
     type: FilmGenre
     description: Optional[str] = None
-    genres: Optional[List[GenresES]] = None
-    directors: Optional[List[PersonFilmWork]] = None
-    actors: Optional[List[PersonFilmWork]] = None
-    writers: Optional[List[PersonFilmWork]] = None
+    genres: Optional[list[GenresES]] = None
+    directors: Optional[list[PersonFilmWork]] = None
+    actors: Optional[list[PersonFilmWork]] = None
+    writers: Optional[list[PersonFilmWork]] = None
 
     class Config:
         use_enum_values = True
