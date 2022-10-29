@@ -3,6 +3,7 @@ from typing import Optional, Union
 
 from core.messages import FilmMessages as msgs  # noqa
 from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from models import Film, FilmDetailedResponse, FilmResponse
 from models.queries import (
     SEARCH_PARAM,
@@ -11,6 +12,7 @@ from models.queries import (
     PaginationQueryParams,
     SortQueryParams,
 )
+from services.file_loader import DownloadFilm, get_file_download_service
 from services.films import FilmService, get_film_service
 
 router = APIRouter()
@@ -137,3 +139,28 @@ async def film_all(
         )
         for film in films_all
     ]
+
+
+@router.get(
+    "/download/{film_id}",
+)
+async def download_film(
+    request: Request,
+    film_id: str = UUID_PARAM,
+    film_download_service: DownloadFilm = Depends(get_file_download_service),
+) -> RedirectResponse:
+
+    ip_address = request.client.host
+
+    film_url = await film_download_service.get_download_url(
+        film_id,
+        ip_address,
+    )
+
+    if film_url is None:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail="No file for film uploaded",
+        )
+
+    return RedirectResponse(film_url)

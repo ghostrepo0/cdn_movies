@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS content.film_work (
     type TEXT NOT NULL,
     created timestamp with time zone,
     modified timestamp with time zone,
-    file_path TEXT DEFAULT '/bucket/test-trailer.mp4'
+    file_path TEXT DEFAULT 'test-trailer.mp4'
 );
 
 CREATE TABLE IF NOT EXISTS content.genre (
