@@ -126,3 +126,4 @@ cython_debug/
 /docker/minio/hostname
 /docker/minio/hosts
 /docker/minio/resolv.conf
+/docker/minio/test-trailer.mp4

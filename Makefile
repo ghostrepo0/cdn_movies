@@ -7,6 +7,8 @@ rebuilt-etl:
 	docker-compose up -d --no-deps --build etl-postgres-elastic
 rebuilt-admin:
 	docker-compose up -d --no-deps --build movies-admin-panel
+rebuilt-fast_api:
+	docker-compose up -d --no-deps --build fastapi_service
 
 migrate-admin-fake:
 	docker-compose exec movies-admin-panel python manage.py migrate movies --fake

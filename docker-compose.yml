@@ -2,23 +2,36 @@ version: '3.8'
 
 services:
 
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    ports:
+      - '1337:80'
+      - '1338:81'
+    depends_on:
+      - fastapi_service
+
   fastapi_service:
     build:
       context: .
       dockerfile: ./docker/movies_api/Dockerfile
     depends_on:
+      postgres_db:
+        condition: service_healthy
       elasticsearch:
         condition: service_started
       redis:
         condition: service_started
       etl-postgres-elastic:
         condition: service_started
-    ports:
-      - '8000:8000'
+#    ports:
+#      - '8000:8000'
     env_file:
       - env/.env.movies_api
       - env/.env.redis
       - env/.env.elasticsearch
+      - env/.env.postgresql
     command: [ "python", "-m", "gunicorn", "main:app", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
 
   movies-admin-panel:
@@ -27,8 +40,8 @@ services:
       dockerfile: ./docker/movies_admin/Dockerfile
     volumes:
       - static_volume:/home/app/web/staticfiles
-    ports:
-      - "8001:8000"
+#    ports:
+#      - "8001:8000"
     env_file:
       - env/.env.movies_admin
       - env/.env.postgresql
@@ -36,7 +49,6 @@ services:
       postgres_db:
         condition: service_healthy
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
-#    command: ls
 
   etl-postgres-elastic:
     build:
@@ -93,55 +105,53 @@ services:
     ports:
       - '6379:6379'
 
-#  minio_client_master:
-#    container_name: minio-client-master
-#    image: 'minio/mc:latest'
-#    depends_on:
-#      minio_master:
-#        condition: service_healthy
-#      minio_node1:
-#        condition: service_healthy
-#    volumes:
-#      - ./docker/minio/:/etc/
-#    entrypoint: etc/minio-entrypoint-master.sh
-#
-#  minio_master:
-#    container_name: minio-server-master
-#    image: 'quay.io/minio/minio'
-#    ports:
-#      - '9000:9000'
-#      - '9001:9001'
-#    environment:
-#      - MINIO_ROOT_USER=minio-root-user-master
-#      - MINIO_ROOT_PASSWORD=minio-root-password-master
-#    command: server /data --console-address ":9001"
-#    volumes:
-#      - minio-master-storage:/data
-#    healthcheck:
-#      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-#      interval: 30s
-#      timeout: 20s
-#      retries: 3
-#
-#  minio_node1:
-#    container_name: minio-server-node1
-#    image: 'quay.io/minio/minio'
-#    ports:
-#      - '9002:9000'
-#      - '9003:9001'
-#    environment:
-#      - MINIO_ROOT_USER=minio-root-user-node1
-#      - MINIO_ROOT_PASSWORD=minio-root-password-node1
-#    command: server /data --console-address ":9001"
-#    volumes:
-#      - minio-node1:/data
-#    depends_on:
-#      - minio_master
-#    healthcheck:
-#      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-#      interval: 30s
-#      timeout: 20s
-#      retries: 3
+  minio_client_master:
+    container_name: minio-client-master
+    image: 'minio/mc:latest'
+    depends_on:
+      minio_master:
+        condition: service_healthy
+      minio_node1:
+        condition: service_healthy
+    volumes:
+      - ./docker/minio/:/etc/
+    entrypoint: etc/minio-entrypoint-master.sh
+
+  minio_master:
+    container_name: minio-server-master
+    image: 'quay.io/minio/minio'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    env_file:
+      - env/.env.minio-master
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-master-storage:/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio_node1:
+    container_name: minio-server-node1
+    image: 'quay.io/minio/minio'
+    ports:
+      - '9002:9000'
+      - '9003:9001'
+    env_file:
+      - env/.env.minio-node1
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-node1:/data
+    depends_on:
+      - minio_master
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
 
 volumes:
   static_volume:
