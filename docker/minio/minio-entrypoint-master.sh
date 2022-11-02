@@ -3,9 +3,13 @@
 mc alias set source http://minio-server-master:9000 minio-root-user-master minio-root-password-master
 mc alias set dest http://minio-server-node1:9000 minio-root-user-node1 minio-root-password-node1
 
+mc alias set dest http://minio-server-node2:9000 minio-root-user-node2 minio-root-password-node2
+
 # Create buckets with versioning and object locking enabled.
 mc mb -l source/bucket
 mc mb -l dest/bucket
+
+mc mb -l dest2/bucket
 
 ### Create a replication admin on source alias
 # create a replication admin user : repladmin
@@ -53,6 +57,8 @@ mc admin policy set source repladmin-policy user=repladmin
 ### on dest alias
 # Create a replication user : repluser on dest alias
 mc admin user add dest repluser repluser123
+
+mc admin user add dest2 repluser repluser123
 
 # create a replication policy for repluser
 # Remove "s3:GetBucketObjectLockConfiguration" if object locking is not enabled, i.e. bucket was not created with `mc mb --with-lock` option
@@ -103,13 +109,19 @@ cat > replpolicy.json <<EOF
 }
 EOF
 mc admin policy add dest replpolicy ./replpolicy.json
+
+mc admin policy add dest2 replpolicy ./replpolicy.json
 cat ./replpolicy.json
 
 # assign this replication policy to repluser
 mc admin policy set dest replpolicy user=repluser
 
+mc admin policy set dest2 replpolicy user=repluser
+
 # define remote target for replication from source/bucket -> dest/bucket
 mc admin bucket remote add source/bucket http://repluser:repluser123@minio-server-node1:9000/bucket --service "replication" --json > remote_arn.json
+
+mc admin bucket remote add source/bucket http://repluser:repluser123@minio-server-node2:9000/bucket --service "replication" --json > remote_arn.json
 
 remote_string=$(grep -Po '"RemoteARN":.*?[^\\]",' remote_arn.json)
 

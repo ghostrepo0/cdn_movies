@@ -116,6 +116,8 @@ services:
         condition: service_healthy
       minio_node1:
         condition: service_healthy
+      minio_node2:
+        condition: service_healthy
 #    entrypoint: /etc/minio-entrypoint-master.sh
 
   minio_master:
@@ -154,6 +156,26 @@ services:
       timeout: 20s
       retries: 3
 
+  minio_node2:
+    container_name: minio-server-node2
+    image: 'quay.io/minio/minio'
+    ports:
+      - '9002:9000'
+      - '9003:9001'
+    env_file:
+      - env/.env.minio-node2
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-node2:/data
+    depends_on:
+      - minio_master
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+
 volumes:
   static_volume:
   postgres_movies_data:
@@ -161,3 +183,4 @@ volumes:
   redis_data:
   minio-master-storage:
   minio-node1:
+  minio-node2:
