@@ -1,0 +1,5 @@
+FROM minio/mc:latest
+
+COPY /docker/minio/minio-entrypoint-master.sh /etc
+RUN chmod +x /etc/minio-entrypoint-master.sh
+ENTRYPOINT ["/etc/minio-entrypoint-master.sh"]

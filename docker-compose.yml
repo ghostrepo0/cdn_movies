@@ -9,6 +9,8 @@ services:
     ports:
       - '1337:80'
       - '1338:81'
+    volumes:
+      - static_volume:/home/app/web/staticfiles
     depends_on:
       - fastapi_service
 
@@ -107,15 +109,14 @@ services:
 
   minio_client_master:
     container_name: minio-client-master
-    image: 'minio/mc:latest'
+    build:
+      dockerfile: ./docker/minio/Dockerfile.minio_client
     depends_on:
       minio_master:
         condition: service_healthy
       minio_node1:
         condition: service_healthy
-    volumes:
-      - ./docker/minio/:/etc/
-    entrypoint: etc/minio-entrypoint-master.sh
+#    entrypoint: /etc/minio-entrypoint-master.sh
 
   minio_master:
     container_name: minio-server-master
