@@ -27,8 +27,6 @@ services:
         condition: service_started
       etl-postgres-elastic:
         condition: service_started
-#    ports:
-#      - '8000:8000'
     env_file:
       - env/.env.movies_api
       - env/.env.redis
@@ -42,8 +40,6 @@ services:
       dockerfile: ./docker/movies_admin/Dockerfile
     volumes:
       - static_volume:/home/app/web/staticfiles
-#    ports:
-#      - "8001:8000"
     env_file:
       - env/.env.movies_admin
       - env/.env.postgresql
@@ -140,9 +136,6 @@ services:
   minio_node1:
     container_name: minio-server-node1
     image: 'quay.io/minio/minio'
-    ports:
-      - '9002:9000'
-      - '9003:9001'
     env_file:
       - env/.env.minio-node1
     command: server /data --console-address ":9001"
@@ -159,9 +152,6 @@ services:
   minio_node2:
     container_name: minio-server-node2
     image: 'quay.io/minio/minio'
-    ports:
-      - '9002:9000'
-      - '9003:9001'
     env_file:
       - env/.env.minio-node2
     command: server /data --console-address ":9001"

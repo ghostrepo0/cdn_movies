@@ -3,7 +3,7 @@
 mc alias set source http://minio-server-master:9000 minio-root-user-master minio-root-password-master
 mc alias set dest http://minio-server-node1:9000 minio-root-user-node1 minio-root-password-node1
 
-mc alias set dest http://minio-server-node2:9000 minio-root-user-node2 minio-root-password-node2
+mc alias set dest2 http://minio-server-node2:9000 minio-root-user-node2 minio-root-password-node2
 
 # Create buckets with versioning and object locking enabled.
 mc mb -l source/bucket
