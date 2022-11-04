@@ -21,3 +21,6 @@ make_superuser-admin:
 
 clean-pyenv:
 	pip freeze | xargs pip uninstall -y
+
+start: compose-up migrate-admin-fake migrate-admin collectstatic-admin make_superuser-admin
+
