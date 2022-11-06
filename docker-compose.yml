@@ -27,6 +27,9 @@ services:
         condition: service_started
       etl-postgres-elastic:
         condition: service_started
+    extra_hosts:
+      - "localhost:host-gateway"
+
     env_file:
       - env/.env.movies_api
       - env/.env.redis
