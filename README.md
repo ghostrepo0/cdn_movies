@@ -53,11 +53,10 @@ $ make compose-down
 
 ### **"MoviesAPI"** (fastapi_service)
 
-    http://127.0.0.1/api/openapi - документация
-    http://127.0.0.1/ или http://localhost/
+    http://127.0.0.1:1337/api/openapi - документация
 
 ### **Admin_Panel** (movies-admin-panel)
-    http://127.0.0.1/admin/ - панель администратора контента
+    http://127.0.0.1:1338/admin/ - панель администратора контента
 
 ### **MinIO** (minio storage)
     http://127.0.0.1:9001 - панель управления мастер-нодой

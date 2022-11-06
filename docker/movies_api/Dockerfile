@@ -37,9 +37,10 @@ RUN apk update --no-cache && apk upgrade --no-cache\
   && pip install -U setuptools \
   && apk add build-base
 
-COPY ../../moives_api/. .
 COPY ../../requirements/. .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements-movies_api.txt
+
+#COPY ../../moives_api/. .
 
 #########
 # FINAL #
